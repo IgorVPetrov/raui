@@ -1,7 +1,0 @@
-DirectoryIndex index.html
-AuthType Basic
-AuthName "/www/2110405.ru/webstat"
-AuthUserFile /home/raui/etc/156893193.passwd
-<Limit GET POST>
-	require valid-user
-</Limit>
