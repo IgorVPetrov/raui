@@ -1,0 +1,85 @@
+/*
+
+jFlow Plus v2 Demo CSS
+
+Description: Demonstation CSS for jFlow Plus
+
+Creator: Devin Walker
+
+Date: July 29, 2010
+
+
+*/
+#sliderContainer { width: 663px; height: 380px; }
+
+.slideContent {
+	position: absolute;
+	top: 71%;
+	left: 4%;
+}
+
+.slideContent .title_block {  height: 33px; }
+
+.slideContent .title_block a {
+    font-family: 'PT Sans Narrow',Arial,sans-serif;
+	color: #fff;
+	font-size: 30px;
+	background: #3278b4;
+	text-decoration: none;
+	padding: 8px;
+	font-style: normal;
+}
+
+.title_block2 {
+    font-family: 'PT Sans Narrow',Arial,sans-serif;
+	font-size: 19px;
+	color: #fff;
+	background: #000;
+	opacity: 0.7;
+	width: 397px;
+	padding: 11px 7px;
+	margin-top: 4px;
+	line-height: 20px;
+}
+
+.slide h3 {  font: 26px/1em 'Rokkitt', serif; color: #FFF;  margin: 0 0 5px 0; }
+
+.slide p { font-size: 14px; color: #FFF; margin: 0; }
+
+.jFlowSlideContainer { overflow: hidden; }
+
+.jFlowSlideContainer a { color: #fff; text-decoration: none; /*font-style: italic;*/ }
+
+.jFlowSlideContainer a:hover { text-decoration: none; }
+
+.jFlowSlideContainer a:focus { position: relative; top: 1px; }
+
+.jFlowNext {
+	background: #3278b4 url("../images/arrow_right.png") no-repeat;
+	height: 36px;
+	position: absolute;
+	top: 47%;
+	right: 0;
+	width: 26px;
+	cursor: pointer;
+}
+
+.jFlowPrev {
+	background: #3278b4 url("../images/arrow_left.png") no-repeat scroll;
+	height: 36px;
+	position: absolute;
+	top: 47%;
+	width: 26px;
+	cursor: pointer;
+}
+
+
+/* controller pagination */
+
+#myController {position: absolute; top: 5px; right: 5px; display: none; }
+
+.jFlowControl { background:url("../images/bullet.png") no-repeat scroll 0px 0px transparent;  float: left; width: 15px; height: 15px;}
+
+.jFlowControl:hover { background-position: -32px 0px; cursor: pointer; }
+
+.jFlowSelected, .jFlowSelected:hover {background-position: -15px 0px;   }

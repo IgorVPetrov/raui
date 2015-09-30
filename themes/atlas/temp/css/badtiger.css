@@ -1,0 +1,168 @@
+@charset "utf-8";
+/* CSS Document */
+
+.ap-descr dt {
+    float: left;
+    font-weight: bold;
+    margin-right: 10px;
+    padding: 0 5px 5px 5px;
+    width: 250px;
+}
+.ap-descr dd {
+    padding: 0 5px 5px 5px;
+    margin-left: 266px;
+}
+#gmap-panorama {
+    height: 400px;
+    width: 100%;
+    padding: 0px;
+    margin: 30px 0 0 0;
+}
+#gmap-panorama img {
+    max-width: none !important;
+}
+#gmap-panorama label {
+    width: auto;
+    display:inline;
+}
+#googleMap, #ymap, #osmap {
+    width: 100%;
+    height: 450px;
+}
+.card-object {
+    background-color: #fff;
+}
+
+.priceblock .price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.priceblock {
+    background-color: rgba(71, 52, 33, 0.80);
+    padding: 30px 30px 10px 30px;
+    margin-top: -108px;
+    height: 68px;
+}
+
+.priceblock .name {
+    font-size: 10px;
+    color: #fff;
+    text-decoration: underline;
+    line-height: 1.4;
+    margin-top: 20px;
+}
+.infob {
+    background-color: rgba(182, 164, 139, 0.80);
+    padding: 30px;
+    color: #fff;
+}
+
+.infob a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.sendmess a {
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sendmess {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.chaloba {
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+    padding-top: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-bottom: -10px;
+}
+
+.chaloba a {
+    text-decoration: none;
+    color: #9c0202;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.statistik {
+    padding-bottom: 20px;
+}
+
+.useradblock .intext {
+    float: left;
+    width: 30%;
+}
+
+.useradblock .ininfo {
+    float: left;
+    width: 70%;
+}
+.thumbnails > li {
+    margin-top: 25px;
+}
+.description-text {
+    margin-top: 20px;
+}
+.add-search-housing-panel button+a, .add-search-housing-panel button+a:hover {
+    /* padding-left: 10px; */
+}
+.column3 {
+    float: left;
+    width: 33%;
+}
+.similar {
+    padding-bottom: 50px;
+}
+
+.similar .similarhr-ads-adv {
+    margin-bottom: 50px;
+}
+.search-housing {
+padding: 11px 39px 1px;
+}
+.slider-price .formalabel {
+    color: #8C6D4C;      font-size: 12px;
+    float: left;
+    line-height: 34px;
+    width: 80px;
+}
+
+.slider-price .formacontrol {
+    float: left;
+    width: 190px;
+    position: relative;
+}
+
+.slider-price div#price_max_val {
+    color: #8C6D4C;      font-size: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.slider-price div#price_min_val {
+    color: #8C6D4C;      font-size: 10px;      position: absolute;      top: 0;      
+    left: 0;
+}
+
+.card-object .col-md-8, .card-object .col-md-4 {
+    float: left;
+    position: relative;
+}
+
+.card-object .col-md-8 {
+    width: 65%;
+    padding: 0 20px;
+}
+
+.card-object .col-md-4 {
+    width: 30%;
+}

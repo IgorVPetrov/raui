@@ -1,0 +1,185 @@
+<?php
+	/* * ********************************************************************************************
+	 *								Raui ORE
+	
+	 
+	
+	
+	
+	 *
+	
+	 *
+	
+	 *
+	
+	
+	 *
+	 * This file is part of Raui ORE
+	 *
+	 * ********************************************************************************************* */
+
+class AdvertController extends ModuleAdminController{
+	public $modelName = 'Advert';
+
+	public function accessRules(){
+		return array(
+			array('allow',
+				'expression'=> "Yii::app()->user->checkAccess('all_modules_admin')",
+			),
+			array('deny',
+				'users'=>array('*'),
+			),
+		);
+	}
+
+	public function init(){
+		Yii::import('application.modules.advertising.models.AdvertArea');
+
+		$advertModel = new Advert;
+		$advertModel->publishAssets();
+		parent::init();
+	}
+
+	public function actionAdmin(){
+		$dataProvider = new CActiveDataProvider('Advert',
+			array(
+				'pagination'=>array(
+					'pageSize'=> 3 //param('adminPaginationPageSize', 20),
+				),
+				'sort' => array(
+					'defaultOrder' => 'id DESC',
+				)
+			)
+		);
+		$this->render('admin',array('dataProvider' => $dataProvider));
+	}
+
+	public function actionCreate(){
+		$model=new $this->modelName;
+		//$this->performAjaxValidation($model);
+
+		if(isset($_POST[$this->modelName])){
+			$model->attributes=$_POST[$this->modelName];
+			$model->scenario = $model->type;
+
+			if (in_array($model->type, array_flip(Advert::getAvailableTypes()))) {
+				$isFile = $isHtml = false;
+				if ($model->type == 'file')
+					$isFile = true;
+				if ($model->type == 'html')
+					$isHtml = true;
+
+				if($model->validate()){
+					if ($isFile) {
+						$activeLangs = Lang::getActiveLangs();
+						if ($activeLangs && is_array($activeLangs)) {
+							foreach ($activeLangs as $key => $val) {
+								$model->setAttribute('js_'.$key, '');
+								$model->setAttribute('html_'.$key, '');
+							}
+						}
+						$model->file = CUploadedFile::getInstance($model, 'file_path');
+						if ($model->file) {
+							$model->file_path = md5(uniqid()).'.'.$model->file->extensionName;
+						}
+					}
+					else {
+						$activeLangs = Lang::getActiveLangs();
+						if ($activeLangs && is_array($activeLangs)) {
+							foreach ($activeLangs as $key => $val) {
+								if($isHtml)
+									$model->setAttribute('js_'.$key, '');
+								else { # js
+									$model->setAttribute('html_'.$key, '');
+								}
+							}
+						}
+						$model->file_path = $model->url = $model->alt_text = '';
+					}
+
+					if($model->save(false)){
+						if ($model->file) {
+							$model->file->saveAs(Yii::getPathOfAlias('webroot').'/uploads/rkl/'.$model->file_path);
+						}
+						$this->redirect(array('admin'));
+					}
+				}
+			}
+		}
+
+		$this->render('create', array('model'=>$model));
+	}
+
+	public function actionUpdate($id){
+		$model = $this->loadModel($id);
+		//$this->performAjaxValidation($model);
+
+		if(isset($_POST[$this->modelName])){
+			$model->attributes=$_POST[$this->modelName];
+			$model->scenario = $model->type;
+
+			if (in_array($model->type, array_flip(Advert::getAvailableTypes()))) {
+				$isFile = $isHtml = false;
+				if ($model->type == 'file') {
+					$isFile = true;
+					$oldFile = $model->file_path;
+				}
+				if ($model->type == 'html')
+					$isHtml = true;
+
+				if($model->validate()){
+					if ($isFile) {
+						$activeLangs = Lang::getActiveLangs();
+						if ($activeLangs && is_array($activeLangs)) {
+							foreach ($activeLangs as $key => $val) {
+								$model->setAttribute('js_'.$key, '');
+								$model->setAttribute('html_'.$key, '');
+							}
+						}
+						$model->file = CUploadedFile::getInstance($model, 'file_path');
+						if ($model->file) {
+							$model->file_path = md5(uniqid()).'.'.$model->file->extensionName;
+						}
+					}
+					else {
+						$activeLangs = Lang::getActiveLangs();
+						if ($activeLangs && is_array($activeLangs)) {
+							foreach ($activeLangs as $key => $val) {
+								if($isHtml) {
+									$model->setAttribute('js_'.$key, '');
+								}
+								else { # js
+									$model->setAttribute('html_'.$key, '');
+								}
+							}
+						}
+						$model->file_path = $model->url = $model->alt_text = '';
+					}
+
+					if($model->save(false)){
+						if ($model->file) {
+							$model->file->saveAs(Yii::getPathOfAlias('webroot').'/uploads/rkl/'.$model->file_path);
+							@unlink(Yii::getPathOfAlias('webroot').'/uploads/rkl/'.$oldFile);
+						}
+						$this->redirect(array('admin'));
+					}
+				}
+			}
+		}
+
+		$this->render('update',	array('model'=> $model));
+	}
+
+	public function actionDelete($id){
+		$fr = Yii::app()->request->getParam('fr');
+		if($fr && $fr == 'adm'){
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}
+}
