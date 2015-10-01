@@ -1,105 +1,106 @@
 <?php
-	/* * ********************************************************************************************
-	 *								Raui ORE
-	
-	 
-	
-	
-	
-	 *
-	
-	 *
-	
-	 *
-	
-	
-	 *
-	 * This file is part of Raui ORE
-	 *
-	 * ********************************************************************************************* */
+
+/* * ********************************************************************************************
+ * 								Raui ORE
+
+
+
+
+
+ *
+
+ *
+
+ *
+
+
+ *
+ * This file is part of Raui ORE
+ *
+ * ********************************************************************************************* */
 
 class CustomYMap {
-	private static $_instance;
-	protected $scripts = array();
-	protected static $icon = array();
 
-	/**
-	 * @return CustomYMap
-	 */
-	public static function init(){
-		self::$icon['href'] = Yii::app()->theme->baseUrl."/images/house.png";
-		self::$icon['size'] = array('x' => 32, 'y' => 37);
-		self::$icon['offset'] = array('x' => -16, 'y' => -35);
+    private static $_instance;
+    protected $scripts = array();
+    protected static $icon = array();
 
-		if (!isset(self::$_instance)) {
-			$className = __CLASS__;
-			self::$_instance = new $className;
-		}
-		return self::$_instance;
-	}
+    /**
+     * @return CustomYMap
+     */
+    public static function init() {
+        self::$icon['href'] = Yii::app()->theme->baseUrl . "/images/house.png";
+        self::$icon['size'] = array('x' => 32, 'y' => 37);
+        self::$icon['offset'] = array('x' => -16, 'y' => -35);
 
-	public function processScripts($applyList = false){
-		if($applyList){
-			$this->scripts[] = '
+        if (!isset(self::$_instance)) {
+            $className = __CLASS__;
+            self::$_instance = new $className;
+        }
+        return self::$_instance;
+    }
+
+    public function processScripts($applyList = false) {
+        if ($applyList) {
+            $this->scripts[] = '
 				placemarksYMap = placemarksAll;
 				if(typeof list !== "undefined"){
 					list.apply();
 				}
 			';
-		}
+        }
 
-		// end of ymaps.ready(function () {
-		$this->scripts[] = '
+        // end of ymaps.ready(function () {
+        $this->scripts[] = '
 			    });
 			});
 		';
 
-		// publish scripts
-		echo CHtml::script(implode("\n", $this->scripts));
-	}
+        // publish scripts
+        echo CHtml::script(implode("\n", $this->scripts));
+    }
 
-	public static function getLangForMap(){
-		# язык в RFC 3066
-		switch(Yii::app()->language) {
-			case 'ru':
-				$langCode = 'ru-RU';
-				break;
-			case 'uk':
-				$langCode = 'uk-UA';
-				break;
-			case 'tr':
-				$langCode = 'tr-TR';
-				break;
-			default:
-				$langCode = 'en-US';
-		}
+    public static function getLangForMap() {
+        # язык в RFC 3066
+        switch (Yii::app()->language) {
+            case 'ru':
+                $langCode = 'ru-RU';
+                break;
+            case 'uk':
+                $langCode = 'uk-UA';
+                break;
+            case 'tr':
+                $langCode = 'tr-TR';
+                break;
+            default:
+                $langCode = 'en-US';
+        }
 
-		if (issetModule('lang') && !isFree()) {
-			$langInfo = Lang::model()->find('name_iso = :name_iso', array('name_iso' => Yii::app()->language));
-			if ($langInfo && isset($langInfo->name_rfc3066))
-				$langCode = $langInfo->name_rfc3066;
-		}
+        if (issetModule('lang') && !isFree()) {
+            $langInfo = Lang::model()->find('name_iso = :name_iso', array('name_iso' => Yii::app()->language));
+            if ($langInfo && isset($langInfo->name_rfc3066))
+                $langCode = $langInfo->name_rfc3066;
+        }
 
-		return $langCode;
-	}
+        return $langCode;
+    }
 
-	public function createMap(){
+    public function createMap() {
         Yii::app()->getClientScript()->registerScriptFile(
-            'http://api-maps.yandex.ru/2.0/?load=package.standard,package.clusters&coordorder=longlat&lang=' . CustomYMap::getLangForMap(),
-            CClientScript::POS_END);
+                'http://api-maps.yandex.ru/2.0/?load=package.standard,package.clusters&coordorder=longlat&lang=' . CustomYMap::getLangForMap(), CClientScript::POS_END);
 
-		# 'yandex#publicMap' и 'yandex#publicMapHybrid' доступны только для России и Украины
-		$yMapTypes = '"yandex#map", "yandex#satellite", "yandex#hybrid"';
+        # 'yandex#publicMap' и 'yandex#publicMapHybrid' доступны только для России и Украины
+        $yMapTypes = '"yandex#map", "yandex#satellite", "yandex#hybrid"';
 
-		if(Yii::app()->language == 'ru' || Yii::app()->language == 'uk'){
-			$yMapTypes .= ', "yandex#publicMap", "yandex#publicMapHybrid"';
-		}
+        if (Yii::app()->language == 'ru' || Yii::app()->language == 'uk') {
+            $yMapTypes .= ', "yandex#publicMap", "yandex#publicMapHybrid"';
+        }
 
-		$this->scripts[] = '
+        $this->scripts[] = '
 			var markers = [];
 		';
 
-		$this->scripts[] = '
+        $this->scripts[] = '
 			var globalYMap;
 			var placemark;
 
@@ -108,13 +109,13 @@ class CustomYMap {
 				var placemarksAll = [];
 
 				var map = new ymaps.Map("ymap", {
-					center: ['.param("module_apartments_ymapsCenterY", 55.75411314653655).', '.param("module_apartments_ymapsCenterX", 37.620717508911184).'],
-					zoom: '.param("module_apartments_ymapsZoomApartment", 15).'
+					center: [' . param("module_apartments_ymapsCenterY", 55.75411314653655) . ', ' . param("module_apartments_ymapsCenterX", 37.620717508911184) . '],
+					zoom: ' . param("module_apartments_ymapsZoomApartment", 15) . '
 				});
 
 				var typeSelector = new ymaps.control.TypeSelector({
 					mapTypes: [
-						'.$yMapTypes.'
+						' . $yMapTypes . '
 					]
 				});
 				typeSelector.setMinWidth(200);
@@ -125,35 +126,35 @@ class CustomYMap {
 				map.controls.add("scaleLine");
 				map.controls.add("searchControl");
 
-				map.behaviors.enable("scrollZoom");
+				map.behaviors.disable("scrollZoom");
 
 				globalYMap = map;
 		';
     }
 
     public function setCenter($lat, $lng) {
-	    $this->scripts[] = '
-			map.setCenter(['.$lng.', '.$lat.']);
+        $this->scripts[] = '
+			map.setCenter([' . $lng . ', ' . $lat . ']);
 		';
-	}
+    }
 
-	public function setZoom($zoom) {
-		$this->scripts[] = '
-			map.setZoom('.$zoom.', {checkZoomRange:true});
+    public function setZoom($zoom) {
+        $this->scripts[] = '
+			map.setZoom(' . $zoom . ', {checkZoomRange:true});
 		';
-	}
+    }
 
-	public function setBounds($lat_min, $lat_max, $lng_min, $lng_max) {
-		$this->scripts[] = '
+    public function setBounds($lat_min, $lat_max, $lng_min, $lng_max) {
+        $this->scripts[] = '
 			map.setBounds([
-				['.$lng_min.', '.$lat_min.'],
-				['.$lng_max.', '.$lat_max.']
+				[' . $lng_min . ', ' . $lat_min . '],
+				[' . $lng_max . ', ' . $lat_max . ']
 			])
 		';
     }
 
-	public function setClusterer() {
-		$this->scripts[] = '
+    public function setClusterer() {
+        $this->scripts[] = '
 			var clusterIcons=[{
 				href: "http://gmaps-utility-library.googlecode.com/svn/trunk/markerclusterer/images/m1.png",
 				size: [53,52],
@@ -164,22 +165,22 @@ class CustomYMap {
 			clusterer.add(markers);
 			map.geoObjects.add(clusterer);
 		';
-	}
+    }
 
-	public function withoutClusterer() {
-		$this->scripts[] = '
+    public function withoutClusterer() {
+        $this->scripts[] = '
 		for(var key in markers){
 			map.geoObjects.add(markers[key]);
 		}
 		';
-	}
+    }
 
-	public function setGeoCenter($city) {
-		$ymapsCenterX = param("module_apartments_ymapsCenterX", 37.620717508911184);
-		$ymapsCenterY = param("module_apartments_ymapsCenterY", 55.75411314653655);
+    public function setGeoCenter($city) {
+        $ymapsCenterX = param("module_apartments_ymapsCenterX", 37.620717508911184);
+        $ymapsCenterY = param("module_apartments_ymapsCenterY", 55.75411314653655);
 
-		$this->scripts[] = '
-			var geocoder = ymaps.geocode("'.$city.'", {kind: "locality", results: 1});
+        $this->scripts[] = '
+			var geocoder = ymaps.geocode("' . $city . '", {kind: "locality", results: 1});
 			geocoder.then(
 				function (res) {
 					if (res.geoObjects.getLength()) {
@@ -187,90 +188,90 @@ class CustomYMap {
 						map.setCenter(point.geometry.getCoordinates());
 					}
 					else {
-						map.setCenter(['.$ymapsCenterX.', '.$ymapsCenterY.']);
+						map.setCenter([' . $ymapsCenterX . ', ' . $ymapsCenterY . ']);
 					}
 				},
 				function (error) {
 					/*alert("Возникла ошибка: " + error.message);*/
-					map.setCenter(['.$ymapsCenterX.', '.$ymapsCenterY.']);
+					map.setCenter([' . $ymapsCenterX . ', ' . $ymapsCenterY . ']);
 				}
 			)
 		';
-	}
+    }
 
-	public function changeZoom($zoom, $operator = '-') {
-		$this->scripts[] = '
+    public function changeZoom($zoom, $operator = '-') {
+        $this->scripts[] = '
 			var oldMapZoom = map.getZoom();
-			var newMapZoom = oldMapZoom '.$operator.$zoom.';
+			var newMapZoom = oldMapZoom ' . $operator . $zoom . ';
 			map.setZoom(newMapZoom, {checkZoomRange:true});
 		';
     }
 
-	public function addMarker($lat, $lng, $content, $multyMarker = 0, $model = null) {
-		$content = $this->filterContent($content);
+    public function addMarker($lat, $lng, $content, $multyMarker = 0, $model = null) {
+        $content = $this->filterContent($content);
 
-		$clusterCaption = '';
-		if ($model) {
-			$clusterCaption = CJavaScript::quote($model->getTitle());
-		}
-		$draggable = ((Yii::app()->user->checkAccess('backend_access') || param('useUserads', 1) && (!Yii::app()->user->isGuest && Yii::app()->user->id == $model->owner_id) ) && !$multyMarker) ? ", draggable: true" : "";
+        $clusterCaption = '';
+        if ($model) {
+            $clusterCaption = CJavaScript::quote($model->getTitle());
+        }
+        $draggable = ((Yii::app()->user->checkAccess('backend_access') || param('useUserads', 1) && (!Yii::app()->user->isGuest && Yii::app()->user->id == $model->owner_id) ) && !$multyMarker) ? ", draggable: true" : "";
 
-		$this->setIconType($model);
+        $this->setIconType($model);
 
-		$this->scripts[] = '
+        $this->scripts[] = '
 			placemark = new ymaps.Placemark(
-				['.$lng.', '.$lat.'], {
-				balloonContent: "'.$content.'",
-				clusterCaption: "'.$clusterCaption.'"
+				[' . $lng . ', ' . $lat . '], {
+				balloonContent: "' . $content . '",
+				clusterCaption: "' . $clusterCaption . '"
 				}, {
-					iconImageHref: "'.self::$icon['href'].'",
-					iconImageSize: ['.self::$icon['size']['x'].', '.self::$icon['size']['y'].'],
-					iconImageOffset: ['.self::$icon['offset']['x'].', '.self::$icon['offset']['y'].'],
+					iconImageHref: "' . self::$icon['href'] . '",
+					iconImageSize: [' . self::$icon['size']['x'] . ', ' . self::$icon['size']['y'] . '],
+					iconImageOffset: [' . self::$icon['offset']['x'] . ', ' . self::$icon['offset']['y'] . '],
 					hideIconOnBalloonOpen: false,
 					balloonShadow: true,
 					balloonCloseButton: true,
 					iconMaxWidth: 300
-					'.$draggable.'
+					' . $draggable . '
 				}
 			);
 
-			'.(($multyMarker) ? '' : 'map.geoObjects.add(placemark); placemark.balloon.open(); ').
-			'markers.push(placemark);
-			placemarksAll['.$model->id.'] = placemark;
+			' . (($multyMarker) ? '' : 'map.geoObjects.add(placemark); placemark.balloon.open(); ') .
+                'markers.push(placemark);
+			placemarksAll[' . $model->id . '] = placemark;
 			';
-	}
+    }
 
-	public function filterContent($content){
-		$content = preg_replace('/\r\n|\n|\r/', "\\n", $content);
-		$content = preg_replace('/(["\'])/', '\\\\\1', $content);
+    public function filterContent($content) {
+        $content = preg_replace('/\r\n|\n|\r/', "\\n", $content);
+        $content = preg_replace('/(["\'])/', '\\\\\1', $content);
 
-		return $content;
-	}
+        return $content;
+    }
 
-	public function actionYmap($id, $model, $inMarker){
+    public function actionYmap($id, $model, $inMarker) {
 
-		$centerX = param('module_apartments_ymapsCenterX', 37.620717508911184);
-		$centerY = param('module_apartments_ymapsCenterY', 55.75411314653655);
-		$defaultCity = param('defaultCity', 'Москва');
+        $centerX = param('module_apartments_ymapsCenterX', 37.620717508911184);
+        $centerY = param('module_apartments_ymapsCenterY', 55.75411314653655);
+        $defaultCity = param('defaultCity', 'Москва');
 
-		if($model->city && $model->city->name){
-			$centerX = 0;
-			$centerY = 0;
-			$defaultCity = $model->city->name;
-		}
+        if ($model->city && $model->city->name) {
+            $centerX = 0;
+            $centerY = 0;
+            $defaultCity = $model->city->name;
+        }
 
-		$this->createMap();
+        $this->createMap();
 
-		// If we have already created marker - show it
-		if ($model->lat && $model->lng) {
-			$this->setCenter($model->lat, $model->lng);
-			$this->setZoom(param('module_apartments_ymapsZoomApartment', 15));
+        // If we have already created marker - show it
+        if ($model->lat && $model->lng) {
+            $this->setCenter($model->lat, $model->lng);
+            $this->setZoom(param('module_apartments_ymapsZoomApartment', 15));
 
-			// Preparing InfoWindow with information about our marker.
-			$this->addMarker($model->lat, $model->lng, $inMarker, 0, $model);
+            // Preparing InfoWindow with information about our marker.
+            $this->addMarker($model->lat, $model->lng, $inMarker, 0, $model);
 
-			if(Yii::app()->user->checkAccess('backend_access') || param('useUserads', 1) && !Yii::app()->user->isGuest && Yii::app()->user->id == $model->owner_id){
-				$this->scripts[] = '
+            if (Yii::app()->user->checkAccess('backend_access') || param('useUserads', 1) && !Yii::app()->user->isGuest && Yii::app()->user->id == $model->owner_id) {
+                $this->scripts[] = '
 					placemark.events.add("dragend", function (e) {
 						var coordsDragend = placemark.geometry.getCoordinates();
 
@@ -279,29 +280,28 @@ class CustomYMap {
 
 						$.ajax({
 							type:"POST",
-							url:"'.Yii::app()->controller->createUrl('savecoords', array('id' => $model->id) ).'",
+							url:"' . Yii::app()->controller->createUrl('savecoords', array('id' => $model->id)) . '",
 							data:({lat: coordsDragendLat, lng: coordsDragendLng}),
 							cache:false
 						})
 					});
 				';
-		    }
-		}
-		else {
-			if(Yii::app()->user->checkAccess('backend_access') || param('useUserads', 1) && !Yii::app()->user->isGuest && Yii::app()->user->id == $model->owner_id){
-				if ($centerX && $centerY) {
-					$this->setCenter($centerY, $centerX);
-				} else {
-					$this->setGeoCenter($defaultCity);
-				}
-				$this->setZoom(param('module_apartments_ymapsZoomCity', 11));
-				$this->setIconType($model);
+            }
+        } else {
+            if (Yii::app()->user->checkAccess('backend_access') || param('useUserads', 1) && !Yii::app()->user->isGuest && Yii::app()->user->id == $model->owner_id) {
+                if ($centerX && $centerY) {
+                    $this->setCenter($centerY, $centerX);
+                } else {
+                    $this->setGeoCenter($defaultCity);
+                }
+                $this->setZoom(param('module_apartments_ymapsZoomCity', 11));
+                $this->setIconType($model);
 
-				$this->addMarker($centerY, $centerX, $inMarker, 0, $model);
+                $this->addMarker($centerY, $centerX, $inMarker, 0, $model);
 
-				$inMarker = $this->filterContent($inMarker);
+                $inMarker = $this->filterContent($inMarker);
 
-				$this->scripts[] = '
+                $this->scripts[] = '
 					var onClick = function(e) {
 						var coordsMapClick = e.get("coordPosition");
 
@@ -310,11 +310,11 @@ class CustomYMap {
 
 						placemark = new ymaps.Placemark(
 							[coordsDragendLng, coordsDragendLat], {
-								balloonContent: "'.$inMarker.'"
+								balloonContent: "' . $inMarker . '"
 							}, {
-								iconImageHref: "'.self::$icon['href'].'",
-								iconImageSize: ['.self::$icon['size']['x'].', '.self::$icon['size']['y'].'],
-								iconImageOffset: ['.self::$icon['offset']['x'].', '.self::$icon['offset']['y'].'],
+								iconImageHref: "' . self::$icon['href'] . '",
+								iconImageSize: [' . self::$icon['size']['x'] . ', ' . self::$icon['size']['y'] . '],
+								iconImageOffset: [' . self::$icon['offset']['x'] . ', ' . self::$icon['offset']['y'] . '],
 								hideIconOnBalloonOpen: false,
 								balloonShadow: true,
 								balloonCloseButton: true,
@@ -327,7 +327,7 @@ class CustomYMap {
 
 						$.ajax({
 							type:"POST",
-							url:"'.Yii::app()->controller->createUrl('savecoords', array('id' => $model->id) ).'",
+							url:"' . Yii::app()->controller->createUrl('savecoords', array('id' => $model->id)) . '",
 							data:({lat: coordsDragendLat, lng: coordsDragendLng}),
 							cache:false
 						});
@@ -343,7 +343,7 @@ class CustomYMap {
 
 							$.ajax({
 								type:"POST",
-								url:"'.Yii::app()->controller->createUrl('savecoords', array('id' => $model->id) ).'",
+								url:"' . Yii::app()->controller->createUrl('savecoords', array('id' => $model->id)) . '",
 								data:({lat: coordsDragendLat, lng: coordsDragendLng}),
 								cache:false
 							})
@@ -351,20 +351,21 @@ class CustomYMap {
 					};
 					map.events.add("click", onClick);
 				';
-			}
-		}
+            }
+        }
 
-		$this->processScripts();
-		return true;
-	}
+        $this->processScripts();
+        return true;
+    }
 
-	public function setIconType($model) {
-		// каждому типу свой значок
-		if (isset($model->objType->icon_file) && $model->objType->icon_file) {
-			self::$icon['href'] = Yii::app()->getBaseUrl().'/'.$model->objType->iconsMapPath.'/'.$model->objType->icon_file;
-			self::$icon['size'] = array('x' => ApartmentObjType::MAP_ICON_MAX_WIDTH, 'y' => ApartmentObjType::MAP_ICON_MAX_HEIGHT);
-			/*$icon['offset'] = array('x' => -16, 'y' => -2);*/
-			self::$icon['offset'] = array('x' => -16, 'y' => -35);
-		}
-	}
+    public function setIconType($model) {
+        // каждому типу свой значок
+        if (isset($model->objType->icon_file) && $model->objType->icon_file) {
+            self::$icon['href'] = Yii::app()->getBaseUrl() . '/' . $model->objType->iconsMapPath . '/' . $model->objType->icon_file;
+            self::$icon['size'] = array('x' => ApartmentObjType::MAP_ICON_MAX_WIDTH, 'y' => ApartmentObjType::MAP_ICON_MAX_HEIGHT);
+            /* $icon['offset'] = array('x' => -16, 'y' => -2); */
+            self::$icon['offset'] = array('x' => -16, 'y' => -35);
+        }
+    }
+
 }
