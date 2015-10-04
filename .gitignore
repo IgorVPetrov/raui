@@ -1,2 +1,7 @@
 /nbproject/private/
-/protected/runtime/cache/
+assets/*
+!assets/.gitignore
+protected/runtime/*
+!protected/runtime/.gitignore
+protected/data/*.db
+themes/classic/views/
