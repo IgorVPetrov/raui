@@ -23,6 +23,8 @@ class MainController extends ModuleUserController {
 	public $htmlPageId = 'usercpanel';
 
 	public $modelName = 'User';
+        
+        public $model;
 
 	public function filters(){
 		return array(
@@ -52,6 +54,9 @@ class MainController extends ModuleUserController {
 			$this->setActiveMenu('my_data');
 
 		$model=$this->loadModel(Yii::app()->user->id);
+                
+                $this->model = $model;
+                
 		$from = Yii::app()->request->getParam('from');
 
 		$socSuccess = Yii::app()->request->getQuery('soc_success');
