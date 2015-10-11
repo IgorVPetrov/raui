@@ -46,8 +46,14 @@ class MainController extends ModuleUserController {
 			),
 		);
 	}
+        
+        public function actionXmlfeed(){
+            $model=$this->loadModel(Yii::app()->user->id);
+            $this->render('xmlfeed',['model' => $model, 'baseURL'=>Yii::app()->theme->baseUrl . '/views/modules/usercpanel', ]);
+            
+        }
 
-	public function actionIndex(){
+        public function actionIndex(){
 		if (param("useUserads"))
 			$this->setActiveMenu('my_listings');
 		else
@@ -55,7 +61,7 @@ class MainController extends ModuleUserController {
 
 		$model=$this->loadModel(Yii::app()->user->id);
                 
-                $this->model = $model;
+                //$this->model = $model;
                 
 		$from = Yii::app()->request->getParam('from');
 
@@ -242,4 +248,5 @@ class MainController extends ModuleUserController {
 
 		echo CHtml::link($availableStatuses[$status]);
 	}
+        
 }

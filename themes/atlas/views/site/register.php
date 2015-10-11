@@ -14,6 +14,7 @@ $cs = Yii::app()->getClientScript();
       <?php
       $form = $this->beginWidget('CActiveForm', array(
           'action' => Yii::app()->controller->createUrl('/site/register'),
+          'htmlOptions' => ['enctype'=>"multipart/form-data"],
           'id' => 'user-register-form',
           'enableAjaxValidation' => false,
       ));
@@ -28,7 +29,7 @@ $cs = Yii::app()->getClientScript();
       </span>
     </div>
     <div class="addAvatar">
-      <input type="file" name="User[photo]" multiple accept="image/*,image/jpeg">
+      <input type="file" name="ava" multiple accept="image/*,image/jpeg">
       <span class="un_ava_info">Pазместите Ваше фото или логотип Вашей компании</span>
     </div>
     <div class="radio-select">

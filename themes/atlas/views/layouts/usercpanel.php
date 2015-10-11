@@ -8,15 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RAUI. Private cabinet</title>
 
-    <!-- Bootstrap 
-    <link rel="stylesheet" type="text/css" href="themes/atlas/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="themes/atlas/css/privCabinet.css">
-    <link rel="stylesheet" type="text/css" href="themes/atlas/css/content-table.css">
-    --> 
     <?php
-    Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl . '/css/bootstrap.css');
-    Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl . '/css/privCabinet.css');
-    Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl . '/css/content-table.css');
+    Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl . '/views/modules/usercpanel/css/bootstrap.css');
+    Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl . '/views/modules/usercpanel/css/privCabinet.css');
+    Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl . '/views/modules/usercpanel/css/content-table.css');
+    Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl . '/views/modules/usercpanel/css/jquery.jscrollpane.css');
+    ?>
+    
+    <?php
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl . '/views/modules/usercpanel/js/jquery-1.11.2.min.js',CClientScript::POS_HEAD);
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl . '/views/modules/usercpanel/js/bootstrap.js',CClientScript::POS_HEAD);
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl . '/views/modules/usercpanel/js/jquery.jscrollpane.min.js',CClientScript::POS_HEAD);
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl . '/views/modules/usercpanel/js/jquery.mousewheel.js',CClientScript::POS_HEAD);
+    $user = HUser::getModel();
     ?>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -37,10 +41,10 @@
               <div class="row pcab_clientCard">
                 <div class="account-left center-block clientText vcenter"> <!-- clientInfo div -->
                   <div>
-                    <div class="pcab_clientName"> <?php echo $this->model->username; ?></div>
+                    <div class="pcab_clientName"> <?php echo $user->username; ?></div>
                     <div class="pcab_clientInfo"> 
 
-<?php switch ($this->model->type): ?>
+<?php switch ($user->type): ?>
 <?php case User::TYPE_PRIVATE_PERSON: ?>
                               Клиент
                               <?php break; ?>
@@ -57,14 +61,14 @@
                       <br>
 
 
-                      Баланс: <?php echo $this->model->balance; ?> руб.<br>
-                      ID: <?php echo $this->model->id; ?><br>
+                      Баланс: <?php echo $user->balance; ?> руб.<br>
+                      ID: <?php echo $user->id; ?><br>
                     </div>
                   </div>
                 </div>
                 <!-- eof clientInfo div -->
                 <div class="account-right pcab_clientPhoto"> <!-- clientPhoto div --> 
-                  <img src="<?php echo $this->model->getAvaSrc(); ?>" class="img-circle img-responsive center-block" alt="client_photo"> </div>
+                  <img src="<?php echo $user->ava ? $user->getAvaSrc() : Yii::app()->theme->baseUrl . '/images/ava-default.jpg'; ?>" class="img-circle img-responsive center-block" alt="client_photo"> </div>
               </div>
             </div>
             <!-- eof clientCard div -->
@@ -80,6 +84,7 @@
                   <li><a href="#">Продажа</a><span>0</span></li>
                   <li><a href="#">Избранные</a><span>3</span></li>
                   <li><a href="#">Разместить</a></li>
+                  <li><a href="/usercpanel/xmlfeed">XML-фид</a></li>
                 </ul>
               </li>
               <li id="lm2"><a href="#">Заявки</a>
@@ -146,7 +151,7 @@
           <!-- eof topMenu row --> 
           <!-- ################################# CONTENT ################################################# -->
           <div class="row content"> <!-- content zone row  -->
-
+              <?php echo $content; ?>
             <!-- eof content zone DIV --> 
           </div>
           <!-- eof content zone row  --> 
@@ -166,9 +171,14 @@
     </div>
     <!-- eof Container --> 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins)--> 
+    
+
+
+
+    <!--
     <script src="themes/atlas/js/jquery-1.11.2.min.js"></script> 
 
-    <!-- Include all compiled plugins (below), or include individual files as needed --> 
+    <!-- Include all compiled plugins (below), or include individual files as needed 
     <script src="themes/atlas/js/bootstrap.js"></script>
 
     <!-- Open sub-menu -->

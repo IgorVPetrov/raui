@@ -2147,7 +2147,7 @@ td a.lookContact {
 
 #client-profile{
 	width:620px;
-	margin:90px auto;
+	margin:70px auto;
 	overflow: hidden;
 }
 
@@ -2337,9 +2337,9 @@ td a.lookContact {
 }
 
 .balance{
-	width:1055px;
-	margin:0 auto;
-	overflow: hidden;
+    width: 1055px;
+    margin: 30px auto;
+    overflow: hidden;
 }
 
 .balance .balance-status{
@@ -2665,4 +2665,114 @@ box-shadow: inset 0px 1px 5px 0px rgba(255,255,251,1);
 
 .rec-wrapper .reclam-banner:hover{
 	opacity: .7;
+}
+
+
+
+/*	XML SEARCH
+**************************************************/
+
+.search-wrapper{
+	width:100%;
+	margin:12px 0 0 0;
+}
+
+.xml-ruls{
+	color:#fff;
+	display: block;
+	float:right;
+	margin:35px 0 15px 0;
+	font-size: 12px;
+	font-family: 'Arial';
+	text-decoration: underline;
+}
+
+.xml-ruls:hover{
+	opacity: .7;
+	color:#fff;
+	text-decoration: none;
+}
+
+.xml-search-area{
+	width:100%;
+	margin:0;
+	overflow: hidden;
+}
+
+.search-title{
+	width:100%;
+	margin:0;
+	padding:23px 0 23px 50px;
+	background:#9bb09d;
+	-webkit-box-shadow: 0px 2px 13px 0px rgba(92,98,92,1);
+	-moz-box-shadow: 0px 2px 13px 0px rgba(92,98,92,1);
+	box-shadow: 0px 2px 13px 0px rgba(92,98,92,1);
+}
+
+.search-title span{
+	font-size: 12px;
+	color:#fff;
+	display: inline-block;
+}
+
+.xml-search-side{
+	width:100%;
+	margin:0;
+	padding:21px 0 21px 50px;
+	background:#b8c5b9;
+}
+
+.xml-search-side form{
+	overflow: hidden;
+	margin:0 auto;
+}
+
+.xml-search-side #search-input{
+	width:79%;
+	height:41px;
+	padding:0 0 0 20px;
+	border:none;
+	display: table-cell;
+	float:left;
+	background:#fff;
+}
+
+.xml-search-side #search-submit{
+	width:170px;
+	height:41px;
+	font-size: 12px;
+	color:#acbcb9;
+	border:none;
+	display: table-cell;
+	float:none;
+	background:#4b78bb;
+}
+
+.xml-search-side #search-submit:hover{
+	color:#fff;
+}
+
+.serach-result{
+	width:100%;
+	margin:70px 0;
+	padding:0 0 0 30px;
+}
+
+.serach-result ol{
+	list-style-type: decimal;
+}
+
+.serach-result ol li{
+	color:#fff;
+	margin:0 0 15px 0;
+}
+
+.serach-result ol li a{
+	color:#fff;
+	font-size: 12px;
+	text-decoration: underline;
+}
+
+.serach-result ol li a:hover{
+	text-decoration: none;
 }

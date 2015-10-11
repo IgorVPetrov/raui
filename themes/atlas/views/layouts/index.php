@@ -1,156 +1,6 @@
 <?php $this->beginContent('//layouts/main'); ?>
 
     <div class="base-screen">
-        <div id="select-conteiner">
-            <div id="tabs-container">
-                <ul class="tabs-menu">
-                    <li class="current"><a href="#tab-1">Аренда</a></li>
-                    <li><a href="#tab-2">Продажа</a></li>
-                </ul>
-                <div class="tab">
-                    <div id="tab-1" class="tab-content">
-                        <select class="main-select-option">
-                            <option>Страна</option>
-                        </select>
-                        <select class="main-select-option">
-                            <option>Регион</option>
-                        </select>
-                        <select class="main-select-option">
-                            <option>Город</option>
-                        </select>
-                        <select class="main-select-option">
-                            <option>Страна</option>
-                        </select>
-                        <select class="main-select-option">
-                            <option>Объект</option>
-                        </select>
-                        <select class="main-select-option">
-                            <option>Комнаты</option>
-                        </select>
-                        <div class="price-counter">
-                            <div class="list-slider">
-                                <div id="slider-range"></div>
-                                <div class="slider-values">
-                                    <input id="min" name="priceIn" readonly value="0">
-                                    <input id="max" name="priceOut" readonly value="20000">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="view-detail-arenda">Детали</button>
-                    <button class="view-search-btn-arenda">Поиск</button>
-                    <div class="full-desc-arenda">
-                        <div class="detail-content">
-                            <div class="detail-row">
-                                <div class="conf-name">Срок аренды</div>
-                                <ul class="term-of-lease select-ul">
-                                    <li><span>Посуточно</span></li>
-                                    <li><span>Дополнительно</span></li>
-                                </ul>
-                            </div>
-                            <div class="detail-row">
-                                <div class="conf-name">Площадь, м&sup2;</div>
-                                <span class="list-desc">Общая</span>
-                                <ul class="term-of-lease select-ul">
-                                    <li><input class="input_det" type="text" placeholder="От"></li>
-                                    <li><input class="input_det" type="text" placeholder="До"></li>
-                                </ul>
-                                <span class="list-desc">Жилая</span>
-                                <ul class="term-of-lease select-ul">
-                                    <li><input class="input_det" type="text" placeholder="От"></li>
-                                    <li><input class="input_det" type="text" placeholder="До"></li>
-                                </ul>
-                                <span class="list-desc">Кухня</span>
-                                <ul class="term-of-lease select-ul">
-                                    <li><input class="input_det" type="text" placeholder="От"></li>
-                                    <li><input class="input_det" type="text" placeholder="До"></li>
-                                </ul>
-                            </div>
-                            <div class="detail-row">
-                                <div class="conf-name">Здание</div>
-                                <ul class="term-of-lease select-ul">
-                                    <li>
-                                        <select>
-                                            <option>Тип здания</option>
-                                        </select>
-                                    </li>
-                                </ul>
-                                <span class="list-desc">Этаж</span>
-                                <ul class="term-of-lease select-ul">
-                                    <li><input class="input_det" type="text" placeholder="От"></li>
-                                    <li><input class="input_det" type="text" placeholder="До"></li>
-                                </ul>
-                                <span class="list-desc">Кроме</span>
-                                <ul class="term-of-lease select-ul radio-btn">
-                                    <li>
-                                        <input type="radio" checked="checked" id="radio-1" name="Radio" />
-                                        <label for="radio-1">первого</label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" checked="checked" id="radio-2" name="Radio" />
-                                        <label for="radio-2">последнего</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="detail-row row-big">
-                                <div class="conf-name">Дополнительно</div>
-                                <ul class="term-of-lease select-ul radio-btn">
-                                    <li>
-                                        <input type="checkbox" checked="checked" id="checkbox-3" name="Checkbox" />
-                                        <label for="checkbox-3">Мебель</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" checked="checked" id="checkbox-4" name="Checkbox" />
-                                        <label for="checkbox-4">Холодильник</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" checked="checked" id="checkbox-5" name="Checkbox" />
-                                        <label for="checkbox-5">Телевизор</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" checked="checked" id="checkbox-6" name="Checkbox" />
-                                        <label for="checkbox-6">Стиральная машина</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" checked="checked" id="checkbox-7" name="Checkbox" />
-                                        <label for="checkbox-7">Телефон</label>
-                                    </li><br>
-                                    <li>
-                                        <input type="checkbox" checked="checked" id="checkbox-8" name="Checkbox" />
-                                        <label for="checkbox-8">Можно с животными</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" checked="checked" id="checkbox-9" name="Checkbox" />
-                                        <label for="checkbox-9">Можно с детьми</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="detail-row row-big">
-                                <div class="conf-name">Искать</div>
-                                <ul class="term-of-lease select-ul radio-btn">
-                                    <li>
-                                        <input type="checkbox" checked="checked" id="checkbox-10" name="Checkbox" />
-                                        <label for="checkbox-10">Только с фото</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" checked="checked" id="checkbox-11" name="Checkbox" />
-                                        <label for="checkbox-11">Без посредников</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" checked="checked" id="checkbox-12" name="Checkbox" />
-                                        <label for="checkbox-12">От агенств</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <button class="use-to-serch">Применить</button>
-                        </div>   
-                    </div>
-                    <div id="tab-2" class="tab-content">
-                        Продажа                              
-                    </div>
-                </div>
-             </div>
-        </div>
         <div class="new-nav-wrap">
             <ul>
                 <li>
@@ -211,44 +61,6 @@
         </div>
 
     </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.view-detail-arenda').click(function(){
-            if( $('.full-desc-arenda').hasClass('detail-check') ){
-                $('.full-desc-arenda').removeClass('detail-check');
-            } else {
-                $('.full-desc-arenda').addClass('detail-check');
-            }
-        });
-
-        $('.select-ul li span').click(function(){
-            $('.select-ul li').removeClass('current');
-            $(this).closest('.select-ul li').addClass('current');
-        });
-
-        $('.detail-row').click(function(){
-            $('.detail-row').removeClass('active-color');
-            $(this).addClass('active-color');
-        });
-
-        $(function() {
-            $( "#slider-range" ).slider({
-              range: true,
-              min: 0,
-              max: 20000,
-              values: [ 0, 20000 ],
-              slide: function( event, ui ) {
-
-                $("#min").val(ui.values[ 0 ]);
-                $("#max").val(ui.values[ 1 ]);
-              }
-            });
-
-      });
-        
-
-    });
-</script>
 
         <!-- Latest ads -->
         <section class="latest-ads container-full">
@@ -259,9 +71,7 @@
             		
                     
             <?php $this->widget('application.modules.apartments.components.ApartmentsWidgetHome', array('criteria' => $criteria,)); ?>
-            <script type="text/javascript">
 
-            </script>
 <ol class="carousel-indicators">
                         <li data-target="#latest-ads" data-slide-to="0" class="active"></li>
                         <li data-target="#latest-ads" data-slide-to="1"></li>
@@ -377,6 +187,11 @@
         </section>
 
 
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#search-view').addClass('active');
+        $('#select-conteiner').css('display', 'block');
+    });
+</script>
 
 <?php $this->endContent(); ?>

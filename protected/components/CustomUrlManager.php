@@ -84,6 +84,7 @@ class CustomUrlManager extends CUrlManager {
 			'/booking/request' => 'booking/main/mainform',
 			'/usercpanel' => 'usercpanel/main/index',
 			'/usercpanel/data' => 'usercpanel/main/data',
+                        '/usercpanel/xmlfeed' => 'usercpanel/main/xmlfeed',
 			'/usercpanel/changepwd' => 'usercpanel/main/changepassword',
 			'/usercpanel/tariffplans' => 'tariffPlans/main/index',
 			'/usercpanel/payments' => 'usercpanel/main/payments',
